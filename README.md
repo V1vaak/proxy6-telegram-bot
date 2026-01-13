@@ -3,9 +3,9 @@
 ![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![Aiogram](https://img.shields.io/badge/aiogram-3.x-green.svg)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0+-red.svg)
+![AIOSQLite](https://img.shields.io/badge/aiosqlite-0.20+-9cf.svg)
 ![Proxy6 API](https://img.shields.io/badge/Proxy6-API-orange.svg)
 ![Yookassa](https://img.shields.io/badge/yookassa-3.0+-brightgreen.svg)
-![AIOSQLite](https://img.shields.io/badge/aiosqlite-0.20+-9cf.svg)
 ![python-dotenv](https://img.shields.io/badge/python--dotenv-1.0+-ff69b4.svg)
 ![License](https://img.shields.io/badge/license-MIT-yellow.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/V1vaak/PROXY6-Telegram-bot)
@@ -77,7 +77,7 @@ python main.py
 
 ## <img src="image_for_readme/image_bd.png" width="40" height="40" alt="" style="margin-bottom: -8px;"> База данных
 
-**SQLite** + **aiosqlite** + **SQLAlchemy** для асинхронной работы.
+**SQLite** + **aiosqlite** + **SQLAlchemy**
 
 ### **Модели (SQLAlchemy ORM)**
 - **[👤 User](app/database/models.py#L16)** — данные пользователей Telegram
