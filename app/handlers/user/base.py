@@ -12,7 +12,7 @@ from app.database.models import User
 from app.utils.func_for_handlers import get_profile_text, get_proxy_list_text
 from app.utils.texts_for_handlers import start_message
 
-import app.keyboards.keyboards as kb
+import app.keyboards.base as kb
 
 
 user_base_router = Router()

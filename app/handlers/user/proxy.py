@@ -17,7 +17,8 @@ from app.utils.constants import (COUNTRY_FLAGS, COUNTRY_NAMES,
                                 PROXY_TYPE_MAP, PROXY_VERSION_MAP)
 from app.utils.func_for_handlers import calc_price_proxy6, get_markup_contries
 
-import app.keyboards.keyboards as kb
+import app.keyboards.base as kb
+from app.keyboards.proxy import count_and_period, pay_now
 
 
 class BuyProxyFSM(StatesGroup):
@@ -108,7 +109,7 @@ async def set_country(callback: CallbackQuery, state: FSMContext):
 
     await callback.message.edit_text(
         'Выберите количество и период:',
-        reply_markup=kb.count_and_period(count=1, period=3)
+        reply_markup=count_and_period(count=1, period=3)
     )
 
 # ================= CHANGE COUNT =================
@@ -129,7 +130,7 @@ async def change_count(callback: CallbackQuery, state: FSMContext):
     await state.update_data(count=count)
 
     await callback.message.edit_reply_markup(
-        reply_markup=kb.count_and_period(count=count, period=period)
+        reply_markup=count_and_period(count=count, period=period)
     )
 
 # ================= CHANGE PERIOD =================
@@ -150,7 +151,7 @@ async def change_period(callback: CallbackQuery, state: FSMContext):
     await state.update_data(period=period)
 
     await callback.message.edit_reply_markup(
-        reply_markup=kb.count_and_period(count=count, period=period)
+        reply_markup=count_and_period(count=count, period=period)
     )
 
 # ================= BACK TO =================
@@ -210,7 +211,7 @@ async def selected_buy(callback: CallbackQuery, state: FSMContext, session: Asyn
                 session=session
             )
 
-            keyboard, payment_url, payment_id = kb.pay_now(price)
+            keyboard, payment_url, payment_id = pay_now(price)
 
             text = (
                 f"<b>{PROXY_VERSION_MAP.get(data['proxy_version'])} | "
@@ -288,7 +289,7 @@ async def iampayed(callback: CallbackQuery, state: FSMContext, session: AsyncSes
                 period=data['period'],
                 session=session
             )
-            keyboard, payment_url, payment_id = kb.pay(price, 
+            keyboard, payment_url, payment_id = pay_now(price, 
                                                        data['payment_url'], 
                                                        data['payment_id']
                                                       )

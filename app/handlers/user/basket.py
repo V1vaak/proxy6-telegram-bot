@@ -22,10 +22,11 @@ from app.services.proxy6.engine import proxy_client
 
 from app.services.yookassa.payment import get_status
 from app.utils.func_for_handlers import format_basket_proxies, group_basket_items
+from app.utils.func_for_handlers import BasketGroup
 
-from app.keyboards.basket import basket_keyboard, BasketGroup
+from app.keyboards.basket import basket_keyboard, pay_in_basket
 
-import app.keyboards.keyboards as kb
+import app.keyboards.base as kb
 
 
 user_basket_router = Router()
@@ -95,7 +96,7 @@ async def pay_basket(callback: CallbackQuery, state: FSMContext, session: AsyncS
 
     text, total_price = await format_basket_proxies(baskets, session)
 
-    keyboard, payment_url, payment_id = kb.pay_in_basket(total_price)
+    keyboard, payment_url, payment_id = pay_in_basket(total_price)
 
     await state.update_data(price=total_price, payment_url=payment_url, payment_id=payment_id)
 
@@ -182,7 +183,7 @@ async def iampayed_in_basket(callback: CallbackQuery, state: FSMContext, session
 
     else:
 
-        keyboard, pay_url, pay_id = kb.pay_in_basket(data['price'], 
+        keyboard, pay_url, pay_id = pay_in_basket(data['price'], 
                                                      data['payment_url'], 
                                                      data['payment_id']
                                                      )
