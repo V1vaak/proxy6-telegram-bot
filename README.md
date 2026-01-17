@@ -1,4 +1,4 @@
-# 🤖 PROXY6 Telegram Bot
+# 🤖 Proxy6 Telegram Bot
 
 ![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![Aiogram](https://img.shields.io/badge/aiogram-3.x-green.svg)
