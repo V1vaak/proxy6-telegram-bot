@@ -28,7 +28,7 @@ dp.shutdown.register(on_shutdown)
 
 
 async def main():
-    # await create_db()
+    await create_db()
     # await start_up_db()
     # await bot.delete_my_commands(scope=types.BotCommandScopeAllPrivateChats())
     dp.update.middleware(DataBaseSession(session_pool=async_session))
