@@ -7,14 +7,17 @@
 ![Proxy6 API](https://img.shields.io/badge/Proxy6-API-orange.svg)
 ![Yookassa](https://img.shields.io/badge/yookassa-3.0+-brightgreen.svg)
 ![python-dotenv](https://img.shields.io/badge/python--dotenv-1.0+-ff69b4.svg)
+![Docker](https://img.shields.io/badge/docker-✓-blue.svg?logo=docker)
+![Docker Compose](https://img.shields.io/badge/compose-✓-2496ED.svg?logo=docker)
 ![License](https://img.shields.io/badge/license-MIT-yellow.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/V1vaak/PROXY6-Telegram-bot)
 
-Telegram-бот для покупки прокси через сервис Proxy6 с интеграцией платежей ЮKassa.
+Telegram-бот для покупки прокси через сервис Proxy6 с интеграцией платежей ЮKassa. 
+
+Проект полностью готов к деплою на сервер через **Docker Compose** 🐳
 
 ## 📋 Содержание
 - [🔗 Полезные ссылки](#-полезные-ссылки)
-- [⚙️ Установка](#️-установка)
 - [🚀 Запуск](#-запуск)
 - [📊 База данных](#-база-данных)
 - [💳 Платежная система](#-платежная-система)
@@ -38,46 +41,143 @@ Telegram-бот для покупки прокси через сервис Proxy
 
 
 
-## ⚙️ Установка
+## 🚀 Полный запуск проекта на новом сервере (Ubuntu)
 
-### 1. Клонирование репозитория
+### 1️⃣ Обновление системы
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+---
+
+### 2️⃣ Установка Git
+
+```bash
+sudo apt install git -y
+```
+
+Проверка:
+
+```bash
+git --version
+```
+
+---
+
+### 3️⃣ Установка Docker
+
+#### Добавить GPG-ключ Docker
+
+```bash
+sudo apt update
+sudo apt install ca-certificates curl -y
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+```
+
+---
+
+#### Добавить репозиторий Docker
+
+```bash
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+```
+
+---
+
+#### Установить Docker
+
+```bash
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+```
+
+---
+
+
+Проверка:
+
+```bash
+sudo docker --version
+sudo docker compose version
+```
+
+
+### 4️⃣ Клонировать репозиторий
+
 ```bash
 git clone https://github.com/V1vaak/proxy6-telegram-bot.git
 cd proxy6-telegram-bot
 ```
 
-### 2. Настройка окружения
+---
+
+### 5️⃣ Создать файл окружения
+
+Создайте `.env` на основе шаблона:
+
 ```bash
-# Копируем шаблон
 cp .env.example .env
-# После чего заполняем файл своими API ключами и прочими необходимыми данными
 ```
 
-### 3. Установка зависимостей
+Откройте файл и заполните переменные:
+
+```env
+PROXY6_API_KEY=your_proxy6_api_key
+YOOKASSA_API_KEY=your_yookassa_api_key
+YOOKASSA_SHOP_ID=your_shop_id
+
+DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/proxydb
+```
+
+---
+
+### 6️⃣ Запуск через Docker Compose
+
 ```bash
-# Создаем виртуальное окружение
-python -m venv .venv
-# Активируем (Windows)
-.venv\Scripts\activate
-# Активируем (Mac/Linux)
-source .venv/bin/activate
-# Устанавливаем зависимости
-pip install -r requirements.txt
+sudo docker compose up -d --build
 ```
 
-## <img src="image_for_readme/image_start.png" width="40" height="40" alt="" style="margin-bottom: -8px;"> Запуск
+Флаг `-d` запускает контейнеры в фоне.
+
+---
+
+### 7️⃣ Проверка логов
 
 ```bash
-# Переходим в нужную директорию
-cd PROXY6-Telegram-bot
-# Запускаем бота
-python main.py
+sudo docker compose logs -f
 ```
+
+---
+
+### 8️⃣ Остановка проекта
+
+```bash
+sudo docker compose down
+```
+
+---
+
+## 🐳 Что запускается
+
+* `bot` — Python приложение
+* `db` — PostgreSQL 15
+* Данные базы сохраняются в Docker volume `postgres_data`
+
+
 
 
 ## <img src="image_for_readme/image_bd.png" width="40" height="40" alt="" style="margin-bottom: -8px;"> База данных
 
-**SQLite** + **aiosqlite** + **SQLAlchemy**
+**PostgreSQL** + **asyncpg** + **SQLAlchemy**
 
 ### **Модели (SQLAlchemy ORM)**
 - **[👤 User](app/database/models.py#L16)** — данные пользователей Telegram
