@@ -3,7 +3,8 @@
 ![Python](https://img.shields.io/badge/python-3.10+-blue.svg)
 ![Aiogram](https://img.shields.io/badge/aiogram-3.x-green.svg)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0+-red.svg)
-![AIOSQLite](https://img.shields.io/badge/aiosqlite-0.20+-9cf.svg)
+![PostgreSQL](https://img.shields.io/badge/postgresql-15+-4169E1.svg?logo=postgresql&logoColor=white)
+![Asyncpg](https://img.shields.io/badge/asyncpg-0.30+-9cf.svg)
 ![Proxy6 API](https://img.shields.io/badge/Proxy6-API-orange.svg)
 ![Yookassa](https://img.shields.io/badge/yookassa-3.0+-brightgreen.svg)
 ![python-dotenv](https://img.shields.io/badge/python--dotenv-1.0+-ff69b4.svg)
@@ -14,11 +15,18 @@
 
 Telegram-бот для покупки прокси через сервис Proxy6 с интеграцией платежей ЮKassa. 
 
+## 🗄️ Стек технологий
+- **База данных:** PostgreSQL 15+ с asyncpg драйвером
+- **ORM:** SQLAlchemy 2.0+ (асинхронная версия)
+- **Контейнеризация:** Docker & Docker Compose 🐳
+- **Backend бота:** Aiogram 3.x
+- **Сервисы / API:** Yookassa API, Proxy6 Python Client
+
 Проект полностью готов к деплою на сервер через **Docker Compose** 🐳
 
 ## 📋 Содержание
 - [🔗 Полезные ссылки](#-полезные-ссылки)
-- [🚀 Запуск](#-запуск)
+- [🚀 Запуск](#-полный-запуск-проекта-на-новом-сервере-(Ubuntu))
 - [📊 База данных](#-база-данных)
 - [💳 Платежная система](#-платежная-система)
 - [🏗️ Архитектура](#-архитектура)
